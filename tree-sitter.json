@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "fknb",
+      "camelcase": "Fknb",
+      "title": "Fknb",
+      "scope": "source.fknb",
+      "file-types": [
+        "nb",
+        "fknb",
+        "ipynb"
+      ],
+      "injection-regex": "^fknb$",
+      "class-name": "TreeSitterFknb"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "An Advance parcer for FkNB and Jupyter .ipynb files ",
+    "authors": [
+      {
+        "name": "Mayank Kumar Jha",
+        "email": "mayank.flashcodes@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/flashcodes-themayankjha/tree-sitter-fknb.git"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
