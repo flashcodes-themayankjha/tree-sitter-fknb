@@ -1,0 +1,233 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
+  "name": "fknb",
+  "rules": {
+    "source_file": {
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "cell"
+      }
+    },
+    "cell": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "markdown_cell"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "code_cell"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "fenced_code_cell"
+        }
+      ]
+    },
+    "markdown_cell": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "marker",
+          "content": {
+            "type": "SYMBOL",
+            "name": "markdown_marker"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "lang",
+              "content": {
+                "type": "SYMBOL",
+                "name": "markdown_lang"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "markdown_line"
+          }
+        }
+      ]
+    },
+    "markdown_marker": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "#%"
+      }
+    },
+    "markdown_lang": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "\\[markdown\\]"
+      }
+    },
+    "markdown_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[^\\n]+"
+      }
+    },
+    "code_cell": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "marker",
+          "content": {
+            "type": "SYMBOL",
+            "name": "code_marker"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "lang",
+              "content": {
+                "type": "SYMBOL",
+                "name": "language"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "code_line"
+          }
+        }
+      ]
+    },
+    "code_marker": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "#%%"
+      }
+    },
+    "language": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "\\[?[A-Za-z0-9_+-]+\\]?"
+      }
+    },
+    "code_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[^\\n]+"
+      }
+    },
+    "fenced_code_cell": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "fence_start",
+          "content": {
+            "type": "SYMBOL",
+            "name": "fence_start"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "lang",
+              "content": {
+                "type": "SYMBOL",
+                "name": "language"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "fenced_line"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "fence_end",
+          "content": {
+            "type": "SYMBOL",
+            "name": "fence_end"
+          }
+        }
+      ]
+    },
+    "fence_start": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "```"
+      }
+    },
+    "fence_end": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "```"
+      }
+    },
+    "fenced_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[^\\n]+"
+      }
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": [],
+  "reserved": {}
+}
