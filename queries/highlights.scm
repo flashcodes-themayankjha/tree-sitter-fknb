@@ -1,14 +1,20 @@
-; Markers
-(code_marker) @keyword
-(markdown_marker) @keyword
-(fence_start) @keyword
-(fence_end) @keyword
+;; ─────────────────────────────────────────────────────
+;; Cell markers
+;; ─────────────────────────────────────────────────────
 
-; Languages inside brackets
-(language) @type
-(markdown_lang) @type
+((marker) @keyword)
+((language_tag) @type)
 
-; Outline structure
-(code_cell) @structure
-(markdown_cell) @structure
-(fenced_code_cell) @structure
+;; Markdown cell content
+((markdown_text_line) @text)
+
+;; Fenced markdown blocks
+((markdown_fenced_block
+   fence_open: _ @punctuation.delimiter
+   fence_close: _ @punctuation.delimiter))
+
+((markdown_fenced_block
+   lang: (language_tag) @type))
+
+;; Code cell raw lines
+((raw_code_line) @none)
