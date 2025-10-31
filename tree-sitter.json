@@ -11,6 +11,7 @@
         "fknb",
         "ipynb"
       ],
+      "highlights": "queries/highlights.scm",
       "injection-regex": "^fknb$",
       "class-name": "TreeSitterFknb"
     }

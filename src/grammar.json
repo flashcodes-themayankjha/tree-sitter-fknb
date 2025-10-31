@@ -6,35 +6,31 @@
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "cell"
+        "name": "notebook_cell"
       }
     },
-    "cell": {
+    "notebook_cell": {
       "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "markdown_cell"
+          "name": "notebook_markdown_cell"
         },
         {
           "type": "SYMBOL",
-          "name": "code_cell"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "fenced_code_cell"
+          "name": "notebook_code_cell"
         }
       ]
     },
-    "markdown_cell": {
+    "notebook_markdown_cell": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
           "name": "marker",
           "content": {
-            "type": "SYMBOL",
-            "name": "markdown_marker"
+            "type": "STRING",
+            "value": "#%"
           }
         },
         {
@@ -45,7 +41,7 @@
               "name": "lang",
               "content": {
                 "type": "SYMBOL",
-                "name": "markdown_lang"
+                "name": "language_markdown"
               }
             },
             {
@@ -61,41 +57,98 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "markdown_line"
+            "name": "_markdown_block"
           }
         }
       ]
     },
-    "markdown_marker": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "#%"
-      }
+    "language_markdown": {
+      "type": "PATTERN",
+      "value": "\\[markdown\\]"
     },
-    "markdown_lang": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "\\[markdown\\]"
-      }
+    "_markdown_block": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "markdown_fenced_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "markdown_text_line"
+        }
+      ]
     },
-    "markdown_line": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[^\\n]+"
-      }
+    "markdown_text_line": {
+      "type": "PATTERN",
+      "value": "[^\\n]+"
     },
-    "code_cell": {
+    "markdown_fenced_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "fence_open",
+          "content": {
+            "type": "STRING",
+            "value": "```"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "lang",
+              "content": {
+                "type": "SYMBOL",
+                "name": "language_tag"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[^\\n]+"
+              },
+              {
+                "type": "STRING",
+                "value": "\n"
+              }
+            ]
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "fence_close",
+          "content": {
+            "type": "STRING",
+            "value": "```"
+          }
+        }
+      ]
+    },
+    "notebook_code_cell": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
           "name": "marker",
           "content": {
-            "type": "SYMBOL",
-            "name": "code_marker"
+            "type": "STRING",
+            "value": "#%%"
           }
         },
         {
@@ -106,7 +159,7 @@
               "name": "lang",
               "content": {
                 "type": "SYMBOL",
-                "name": "language"
+                "name": "language_tag"
               }
             },
             {
@@ -122,100 +175,18 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "code_line"
+            "name": "raw_code_line"
           }
         }
       ]
     },
-    "code_marker": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "#%%"
-      }
+    "raw_code_line": {
+      "type": "PATTERN",
+      "value": "[^\\n]+"
     },
-    "language": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "\\[?[A-Za-z0-9_+-]+\\]?"
-      }
-    },
-    "code_line": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[^\\n]+"
-      }
-    },
-    "fenced_code_cell": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "fence_start",
-          "content": {
-            "type": "SYMBOL",
-            "name": "fence_start"
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "lang",
-              "content": {
-                "type": "SYMBOL",
-                "name": "language"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "fenced_line"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "fence_end",
-          "content": {
-            "type": "SYMBOL",
-            "name": "fence_end"
-          }
-        }
-      ]
-    },
-    "fence_start": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "```"
-      }
-    },
-    "fence_end": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "```"
-      }
-    },
-    "fenced_line": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[^\\n]+"
-      }
+    "language_tag": {
+      "type": "PATTERN",
+      "value": "\\[[A-Za-z0-9_+\\-]+\\]"
     }
   },
   "extras": [

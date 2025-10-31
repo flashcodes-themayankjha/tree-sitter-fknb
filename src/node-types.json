@@ -1,6 +1,47 @@
 [
   {
-    "type": "cell",
+    "type": "markdown_fenced_block",
+    "named": true,
+    "fields": {
+      "fence_close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "```",
+            "named": false
+          }
+        ]
+      },
+      "fence_open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "```",
+            "named": false
+          }
+        ]
+      },
+      "lang": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "language_tag",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "markdown_text_line",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "notebook_cell",
     "named": true,
     "fields": {},
     "children": {
@@ -8,22 +49,18 @@
       "required": true,
       "types": [
         {
-          "type": "code_cell",
+          "type": "notebook_code_cell",
           "named": true
         },
         {
-          "type": "fenced_code_cell",
-          "named": true
-        },
-        {
-          "type": "markdown_cell",
+          "type": "notebook_markdown_cell",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "code_cell",
+    "type": "notebook_code_cell",
     "named": true,
     "fields": {
       "lang": {
@@ -31,7 +68,7 @@
         "required": false,
         "types": [
           {
-            "type": "language",
+            "type": "language_tag",
             "named": true
           }
         ]
@@ -41,8 +78,8 @@
         "required": true,
         "types": [
           {
-            "type": "code_marker",
-            "named": true
+            "type": "#%%",
+            "named": false
           }
         ]
       }
@@ -52,80 +89,14 @@
       "required": false,
       "types": [
         {
-          "type": "code_line",
+          "type": "raw_code_line",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "code_line",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "fence_end",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "fence_start",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "fenced_code_cell",
-    "named": true,
-    "fields": {
-      "fence_end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "fence_end",
-            "named": true
-          }
-        ]
-      },
-      "fence_start": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "fence_start",
-            "named": true
-          }
-        ]
-      },
-      "lang": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "language",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "fenced_line",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "fenced_line",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "markdown_cell",
+    "type": "notebook_markdown_cell",
     "named": true,
     "fields": {
       "lang": {
@@ -133,7 +104,7 @@
         "required": false,
         "types": [
           {
-            "type": "markdown_lang",
+            "type": "language_markdown",
             "named": true
           }
         ]
@@ -143,8 +114,8 @@
         "required": true,
         "types": [
           {
-            "type": "markdown_marker",
-            "named": true
+            "type": "#%",
+            "named": false
           }
         ]
       }
@@ -154,14 +125,18 @@
       "required": false,
       "types": [
         {
-          "type": "markdown_line",
+          "type": "markdown_fenced_block",
+          "named": true
+        },
+        {
+          "type": "markdown_text_line",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "markdown_line",
+    "type": "raw_code_line",
     "named": true,
     "fields": {}
   },
@@ -175,7 +150,7 @@
       "required": false,
       "types": [
         {
-          "type": "cell",
+          "type": "notebook_cell",
           "named": true
         }
       ]
@@ -186,23 +161,23 @@
     "named": false
   },
   {
+    "type": "#%",
+    "named": false
+  },
+  {
+    "type": "#%%",
+    "named": false
+  },
+  {
     "type": "```",
     "named": false
   },
   {
-    "type": "code_marker",
+    "type": "language_markdown",
     "named": true
   },
   {
-    "type": "language",
-    "named": true
-  },
-  {
-    "type": "markdown_lang",
-    "named": true
-  },
-  {
-    "type": "markdown_marker",
+    "type": "language_tag",
     "named": true
   }
 ]

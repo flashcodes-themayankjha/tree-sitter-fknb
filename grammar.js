@@ -4,61 +4,54 @@ module.exports = grammar({
   extras: $ => [/\s/],
 
   rules: {
-    source_file: $ => repeat($.cell),
+    source_file: $ => repeat($.notebook_cell),
 
-    cell: $ => choice(
-      $.markdown_cell,
-      $.code_cell,
-      $.fenced_code_cell
+    notebook_cell: $ => choice(
+      $.notebook_markdown_cell,
+      $.notebook_code_cell
     ),
 
-    // --------------------------
+    //
     // MARKDOWN CELL
-    // --------------------------
-    markdown_cell: $ => seq(
-      field('marker', $.markdown_marker),
-      optional(field('lang', $.markdown_lang)),
+    //
+
+    notebook_markdown_cell: $ => seq(
+      field('marker', '#%'),
+      optional(field('lang', $.language_markdown)),
       '\n',
-      repeat($.markdown_line)
+      repeat($._markdown_block)
     ),
 
-    markdown_marker: $ => token('#%'),
+    language_markdown: $ => /\[markdown\]/,
 
-    markdown_lang: $ => token(/\[markdown\]/),
-
-    markdown_line: $ => token(/[^\n]+/),
-
-    // --------------------------
-    // CODE CELL
-    // --------------------------
-    code_cell: $ => seq(
-      field('marker', $.code_marker),
-      optional(field('lang', $.language)),
-      '\n',
-      repeat($.code_line)
+    _markdown_block: $ => choice(
+      $.markdown_fenced_block,
+      $.markdown_text_line
     ),
 
-    code_marker: $ => token('#%%'),
+    markdown_text_line: $ => /[^\n]+/,
 
-    // Accept: python, [python], [ markdown ]
-    language: $ => token(/\[?[A-Za-z0-9_+-]+\]?/),
-
-    code_line: $ => token(/[^\n]+/),
-
-    // --------------------------
-    // FENCED CODE BLOCKS
-    // --------------------------
-    fenced_code_cell: $ => seq(
-      field('fence_start', $.fence_start),
-      optional(field('lang', $.language)),
+    markdown_fenced_block: $ => seq(
+      field('fence_open', '```'),
+      optional(field('lang', $.language_tag)),
       '\n',
-      repeat($.fenced_line),
-      field('fence_end', $.fence_end)
+      repeat(choice(/[^\n]+/, '\n')),
+      field('fence_close', '```')
     ),
 
-    fence_start: $ => token('```'),
-    fence_end: $ => token('```'),
+    //
+    // EXECUTABLE CODE CELL
+    //
 
-    fenced_line: $ => token(/[^\n]+/),
+    notebook_code_cell: $ => seq(
+      field('marker', '#%%'),
+      optional(field('lang', $.language_tag)),
+      '\n',
+      repeat($.raw_code_line)
+    ),
+
+    raw_code_line: $ => /[^\n]+/,
+
+    language_tag: $ => /\[[A-Za-z0-9_+\-]+\]/,
   }
-})
+});
