@@ -1,3 +1,5 @@
+// Author: Mayank Jha
+
 module.exports = grammar({
   name: 'fknb',
 
