@@ -1,7 +1,6 @@
 #%% [python]
 print("Hello fknb!")
 
-#%% [markdown]
 #%% 
 a = 5 
 b = 10 
@@ -13,6 +12,8 @@ print(c)
 
 #%
 # Notes here
+## This is something 
+
 This is Test 
 
 #%% 
@@ -23,6 +24,10 @@ x = 42
 print(x)
 
 
+#%% [python]
+# Codecell
+print("Hello World")
+
 
 #%
 #### This is test for codeblock
@@ -31,5 +36,4 @@ print(x)
 a = 40 
 b= 50
 print("Hello World")
-```
-
+````
