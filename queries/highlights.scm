@@ -1,20 +1,19 @@
-;; ─────────────────────────────────────────────────────
-;; Cell markers
-;; ─────────────────────────────────────────────────────
+;; =========================
+;; Notebook Cell Markers
+;; =========================
 
-((marker) @keyword)
-((language_tag) @type)
+(notebook_code_cell
+  (language_tag) @keyword
+  (#set! "priority" 110))
 
-;; Markdown cell content
-((markdown_text_line) @text)
+(notebook_markdown_cell
+  (language_tag) @keyword
+  (#set! "priority" 110))
 
-;; Fenced markdown blocks
-((markdown_fenced_block
-   fence_open: _ @punctuation.delimiter
-   fence_close: _ @punctuation.delimiter))
+;; Raw code lines inside code cell -> let injection handle actual highlight
+(raw_code_line) @none
 
-((markdown_fenced_block
-   lang: (language_tag) @type))
+;; Markdown cell text
+(markdown_text_line) @string.special
 
-;; Code cell raw lines
-((raw_code_line) @none)
+(markdown_fenced_block) @comment
