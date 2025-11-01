@@ -17,8 +17,7 @@
 ;; ─────────────────────────────────────────────────────
 ;; Inject real language inside code cell body
 ;; ─────────────────────────────────────────────────────
-
-((notebook_code_cell
-  lang: (language_tag) @injection.language
-  (raw_code_line) @injection.content)
- (#match? @injection.language "^[A-Za-z0-9_+-]+$"))
+(notebook_code_cell
+  (language_tag) @lang
+  (raw_code_line) @injected_content
+  (#set! injected.language @lang))
